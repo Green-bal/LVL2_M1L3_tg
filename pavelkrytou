@@ -1,0 +1,84 @@
+f=""
+import telebot
+import random
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+# Замени 'TOKEN' на токен твоего бота
+# Этот токен ты получаешь от BotFather, чтобы бот мог работать
+bot = telebot.TeleBot(f)
+
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    markup = InlineKeyboardMarkup()
+    markup.row_width = 2
+    markup.add(
+        InlineKeyboardButton("я люблю тюленьчики", callback_data="btn1"),
+        InlineKeyboardButton("я не лублу тюленей", callback_data="btn2")
+    )
+    bot.send_message(message.chat.id, "Ты любищь тюленчиков", reply_markup=markup)
+
+@bot.callback_query_handler(func=lambda message: True)
+def callback_query(message):
+    if message.data == "btn1":
+        bot.send_message(message.chat.id, "ты большой молодец")
+    elif message.data == "btn2":
+        bot.send_message(message.chat.id, "2 в журнал")
+@bot.message_handler(commands=['hello'])
+def send_hello(message):
+    bot.reply_to(message, "Привет! Как дела?")
+
+@bot.message_handler(commands=['bye'])
+def send_bye(message):
+    bot.reply_to(message, "Пока! Удачи!")
+
+@bot.message_handler(commands=["BAD"])
+def KROLIK(message):
+    bot.reply_to(message, "GIRL")
+
+@bot.message_handler(commands=["Lays"])
+def orange(message):
+    bot.reply_to(message, "staks")
+@bot.message_handler(commands=["nikita"])
+def gen_emodji(message):
+    emodji = ["\U0001f600", "\U0001f642", "\U0001F606", "\U0001F923"]
+    bot.reply_to(message, random.choice(emodji))
+@bot.message_handler(commands=["realme_note_60x"])
+def pnerenbombom(message):
+    with open("1200px-Village_&_Pillage_art.jpg", 'rb') as photo:
+            bot.send_photo(message.chat.id, photo)
+
+@bot.message_handler(commands=["Iphone_16e"])
+def pnerenbombo(message):
+    with open("Снимок экрана 2025-05-14 170042.png", 'rb') as photo:
+            bot.send_photo(message.chat.id, photo)
+
+@bot.message_handler(commands=["Iphone_17_air"])
+def pnerenbomo(message):
+    with open("iphone-air-6826c68c924fe0.83210378.jpg", 'rb') as photo:
+            bot.send_photo(message.chat.id, photo)
+
+@bot.message_handler(commands=["Legenda"])
+def pnerenbomo(message):
+    with open("S4a023f5c142d43c28f821a1023303d44K.webp", 'rb') as photo:
+            bot.send_photo(message.chat.id, photo)
+@bot.message_handler(commands=["Valic"])
+def frygyrt(message):
+    x ="61.947899"
+    y ="76.654833"
+    bot.send_location(message.chat.id,x,y)
+@bot.message_handler(commands=["Redmi_note_13"])
+def pnerenbomb(message):
+    with open("i.webp", 'rb') as photo:
+            bot.send_photo(message.chat.id, photo)
+
+@bot.message_handler(func=lambda message: True)
+def echo_all(message):
+
+    elements = "+-/*!&$#?=@<>123456789"
+    password = ""
+
+    for i in range(14):
+        password += random.choice(elements)
+
+    return bot.reply_to(message, password)
+
+bot.polling()
